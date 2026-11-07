@@ -11,13 +11,19 @@ function addFood() {
   foods.value.push(food.value)
   food.value = ''
 }
+
+function removeFood(index: number) {
+  foods.value.splice(index, 1)
+}
 </script>
 
 <template>
   <h1 class="text-3xl font-bold">今日飲食</h1>
   <input class="border p-2" v-model="food">
-  <button class="bg-red-500 text-white p-2 border-2 rounded-md" @click="addFood">新增</button>
+  <button class="bg-gray-700 text-white p-2 border-2 rounded-md" @click="addFood">新增</button>
   <ul>
-    <li v-for="(item, i) in foods" :key="i">{{ item }}</li>
+    <li v-for="(item, i) in foods" :key="i">{{ item }}
+      <button class="bg-red-400 text-white p-2 border-2 rounded-md" @click="removeFood(i)">刪除</button>
+    </li>
   </ul>
 </template>
