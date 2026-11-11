@@ -32,9 +32,9 @@ watch(
 </script>
 
 <template>
-  <div class="max-w-lg mx-auto p-4">
-    <h1 class="text-3xl font-bold">今日飲食</h1>
-    <form @submit.prevent="addFood">
+  <div class="max-w-sm mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-4">今日飲食</h1>
+    <form class="flex gap-2 mb-4" @submit.prevent="addFood">
       <select class="border p-2" v-model="meal">
         <option>早餐</option>
         <option>午餐</option>
@@ -42,16 +42,20 @@ watch(
         <option>晚餐</option>
         <option>宵夜</option>
       </select>
-      <input class="border p-2" v-model="food" />
-      <button class="bg-gray-700 text-white p-2 border-2 rounded-md">
+      <input class="border p-2 flex-1 min-w-0" v-model="food" />
+      <button class="bg-gray-700 text-white p-2 border-2 rounded-md shrink-0">
         新增
       </button>
     </form>
     <ul>
-      <li v-for="(item, i) in foods" :key="i">
-        {{ item.meal }}：{{ item.name }}
+      <li
+        class="flex justify-between items-center border-b py-[2px] gap-4"
+        v-for="(item, i) in foods"
+        :key="i"
+      >
+        <span class="break-all"> {{ item.meal }}：{{ item.name }}</span>
         <button
-          class="bg-red-400 text-white p-2 border-2 rounded-md"
+          class="bg-red-400 text-white p-2 border-2 rounded-md shrink-0"
           @click="removeFood(i)"
         >
           刪除
