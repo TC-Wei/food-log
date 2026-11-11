@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { ref } from "vue"
+import { ref,watch } from "vue"
 type Meal = "早餐"|"午餐"|"點心"|"晚餐"|"宵夜"
 interface FoodItem {name:string;meal:Meal}
 
+
 const food = ref<string>("")
 const meal = ref<Meal>('早餐')
-const foods = ref<FoodItem[]>([])
+const saved = localStorage.getItem('foods')
+const foods = ref<FoodItem[]>(saved ? JSON.parse(saved):[])
 
 
 function addFood() {
@@ -19,11 +21,14 @@ function addFood() {
 function removeFood(index: number) {
   foods.value.splice(index, 1)
 }
+watch(foods,()=>{
+  localStorage.setItem("foods",JSON.stringify(foods.value))
+},{deep:true})
 </script>
 
 <template>
   <h1 class="text-3xl font-bold">今日飲食</h1>
-  <select  class:border p-2 v-model="meal">
+  <select  class="border p-2" v-model="meal">
     <option>早餐</option>
     <option>午餐</option>
     <option>點心</option>
