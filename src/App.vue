@@ -6,15 +6,32 @@ import FoodRow from "./components/FoodRow.vue";
 const food = ref<string>("");
 const meal = ref<Meal>("早餐");
 const saved = localStorage.getItem("foods");
-const foods = ref<FoodItem[]>(saved ? JSON.parse(saved) : []);
+const foods = ref<FoodItem[]>(
+  saved
+    ? JSON.parse(saved).map((item: FoodItem) => ({
+        ...item,
+        date: formatDate(item.id),
+      }))
+    : [],
+);
 const count = computed(() => foods.value.length);
 
+function formatDate(timestamp: number) {
+  const date = new Date(timestamp);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const mm = String(month).padStart(2, "0");
+  const dd = String(day).padStart(2, "0");
+  return `${year}-${mm}-${dd}`;
+}
 function addFood() {
   if (food.value.trim() === "") {
     return;
   }
   foods.value.push({
     id: Date.now(),
+    date: formatDate(Date.now()),
     name: food.value.trim(),
     meal: meal.value,
   });
