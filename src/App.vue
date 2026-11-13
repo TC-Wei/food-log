@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { ref, watch, computed } from "vue";
-type Meal = "早餐" | "午餐" | "點心" | "晚餐" | "宵夜";
-interface FoodItem {
-  id: number;
-  name: string;
-  meal: Meal;
-}
+import type { Meal, FoodItem } from "./types";
+import FoodRow from "./components/FoodRow.vue";
 
 const food = ref<string>("");
 const meal = ref<Meal>("早餐");
@@ -55,19 +51,12 @@ watch(
     </form>
     <p>總共 {{ count }} 筆</p>
     <ul>
-      <li
-        class="flex justify-between items-center border-b py-[2px] gap-4"
+      <FoodRow
         v-for="(item, i) in foods"
         :key="item.id"
-      >
-        <span class="break-all"> {{ item.meal }}：{{ item.name }}</span>
-        <button
-          class="bg-red-400 text-white p-2 border-2 rounded-md shrink-0"
-          @click="removeFood(i)"
-        >
-          刪除
-        </button>
-      </li>
+        :item="item"
+        @remove="removeFood(i)"
+      />
     </ul>
   </div>
 </template>
