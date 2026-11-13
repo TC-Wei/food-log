@@ -2,6 +2,7 @@
 import { ref, watch } from "vue";
 type Meal = "早餐" | "午餐" | "點心" | "晚餐" | "宵夜";
 interface FoodItem {
+  id: number;
   name: string;
   meal: Meal;
 }
@@ -15,7 +16,7 @@ function addFood() {
   if (food.value.trim() === "") {
     return;
   }
-  foods.value.push({ name: food.value, meal: meal.value });
+  foods.value.push({ id: Date.now(), name: food.value, meal: meal.value });
   food.value = "";
 }
 
@@ -51,7 +52,7 @@ watch(
       <li
         class="flex justify-between items-center border-b py-[2px] gap-4"
         v-for="(item, i) in foods"
-        :key="i"
+        :key="item.id"
       >
         <span class="break-all"> {{ item.meal }}：{{ item.name }}</span>
         <button
