@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 type Meal = "早餐" | "午餐" | "點心" | "晚餐" | "宵夜";
 interface FoodItem {
   id: number;
@@ -11,6 +11,7 @@ const food = ref<string>("");
 const meal = ref<Meal>("早餐");
 const saved = localStorage.getItem("foods");
 const foods = ref<FoodItem[]>(saved ? JSON.parse(saved) : []);
+const count = computed(() => foods.value.length);
 
 function addFood() {
   if (food.value.trim() === "") {
@@ -52,6 +53,7 @@ watch(
         新增
       </button>
     </form>
+    <p>總共 {{ count }} 筆</p>
     <ul>
       <li
         class="flex justify-between items-center border-b py-[2px] gap-4"
