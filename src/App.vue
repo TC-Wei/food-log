@@ -16,7 +16,11 @@ function addFood() {
   if (food.value.trim() === "") {
     return;
   }
-  foods.value.push({ id: Date.now(), name: food.value, meal: meal.value });
+  foods.value.push({
+    id: Date.now(),
+    name: food.value.trim(),
+    meal: meal.value,
+  });
   food.value = "";
 }
 
