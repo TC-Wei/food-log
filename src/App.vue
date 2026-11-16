@@ -2,6 +2,7 @@
 import { ref, watch, computed } from "vue";
 import type { Meal, FoodItem } from "./types";
 import FoodRow from "./components/FoodRow.vue";
+import ClearButton from "./components/ClearButton.vue";
 
 const food = ref<string>("");
 const meal = ref<Meal>("早餐");
@@ -48,6 +49,11 @@ watch(
   },
   { deep: true },
 );
+function clearAll() {
+  if (confirm("確定刪除全部嗎") === true) {
+    foods.value = [];
+  }
+}
 </script>
 
 <template>
@@ -67,6 +73,7 @@ watch(
       </button>
     </form>
     <p>總共 {{ count }} 筆</p>
+    <ClearButton :count="count" @clear-all="clearAll" />
     <ul>
       <FoodRow
         v-for="(item, i) in foods"
