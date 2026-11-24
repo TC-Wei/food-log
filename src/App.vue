@@ -11,7 +11,7 @@ const foods = ref<FoodItem[]>(
   saved
     ? JSON.parse(saved).map((item: FoodItem) => ({
         ...item,
-        date: formatDate(item.id),
+        date: item.date || formatDate(item.id),
       }))
     : [],
 );
